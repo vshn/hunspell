@@ -1,0 +1,32 @@
+= Hunspell for VSHN
+
+This project builds a Docker image used to spell check the contents of documents produced at VSHN.
+
+== Exceptions
+
+The file `hunspell_exclude` contains a list of words that are acceptable within VSHN documentation, including the following:
+
+* Network protocols.
+* Names of common products.
+* Various acronyms.
+
+== Dictionaries
+
+The version of `hunspell` provided in this image _only_ contains dictionaries for the following languages:
+
+* English
+* German
+* French
+
+NOTE: You can check the list of available dictionaries using the command `docker run --rm --user "$(id -u)" --volume $(pwd):/spell vshn/hunspell:1.7.0 -D`
+
+== Versioning
+
+The Docker images have the same version as the `hunspell` binary contained within.
+
+== Usage
+
+For example, after building the https://handbook.vshn.ch[VSHN Handbook] with the `make html` command, you can run the following command to check the spelling of all HTML files:
+
+`docker run --rm --user "$(id -u)" --volume $(pwd):/spell vshn/hunspell:1.7.0 -d en,vshn -l -H _public/**/*.html`
+
