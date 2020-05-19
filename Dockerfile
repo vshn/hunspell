@@ -1,9 +1,9 @@
 # 1. Builder image
-FROM ubuntu:20.04 AS builder
+FROM alpine:3.11 AS builder
 
 # Clone latest dictionaries
 WORKDIR /root
-RUN apt-get update && apt-get install -y git
+RUN apk add --no-cache git
 RUN git clone --depth 1 -o 5ede45bb705d3f9f525ea779f7b487f9fc062013 https://github.com/wooorm/dictionaries.git
 
 # 2. Runtime image
