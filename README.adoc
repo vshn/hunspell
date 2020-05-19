@@ -1,6 +1,6 @@
 = Hunspell for VSHN
 
-This project builds a Docker image used to spell check the contents of documents produced at VSHN.
+This project builds a Docker image used to spell check the contents of documents produced at VSHN. The Docker image is available in https://hub.docker.com/r/vshn/hunspell[Docker Hub].
 
 == Exceptions
 
