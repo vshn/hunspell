@@ -28,5 +28,5 @@ The Docker images have the same version as the `hunspell` binary contained withi
 
 For example, after building the https://handbook.vshn.ch[VSHN Handbook] with the `make html` command, you can run the following command to check the spelling of all HTML files:
 
-`docker run --rm --user "$(id -u)" --volume $(pwd):/spell vshn/hunspell:1.7.0 -d en,vshn -l -H _public/\**/*.html`
+`docker run --rm --user "$(id -u)" --volume $(pwd):/spell vshn/hunspell:1.7.0 -d en,vshn -l -H _public/\**/\*.html`
 
