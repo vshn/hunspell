@@ -1,5 +1,5 @@
 # 1. Builder image
-FROM alpine:3.11 AS builder
+FROM alpine:3.17 AS builder
 
 # Clone latest dictionaries
 WORKDIR /root
@@ -7,15 +7,15 @@ RUN apk add --no-cache git
 RUN git clone --depth 1 -o 5ede45bb705d3f9f525ea779f7b487f9fc062013 https://github.com/wooorm/dictionaries.git
 
 # 2. Runtime image
-FROM alpine:3.11
+FROM alpine:3.17
 
 WORKDIR /spell
 RUN apk add --no-cache hunspell
 
 # Copy only required dictionaries
 RUN sh -c 'mkdir -pv /usr/share/hunspell'
-COPY --from=builder /root/dictionaries/dictionaries/en/index.aff /usr/share/hunspell/en.aff
-COPY --from=builder /root/dictionaries/dictionaries/en/index.dic /usr/share/hunspell/en.dic
+COPY --from=builder /root/dictionaries/dictionaries/en/index.aff /usr/share/hunspell/default.aff
+COPY --from=builder /root/dictionaries/dictionaries/en/index.dic /usr/share/hunspell/default.dic
 COPY --from=builder /root/dictionaries/dictionaries/de-CH/index.aff /usr/share/hunspell/de.aff
 COPY --from=builder /root/dictionaries/dictionaries/de-CH/index.dic /usr/share/hunspell/de.dic
 COPY --from=builder /root/dictionaries/dictionaries/fr/index.aff /usr/share/hunspell/fr.aff
@@ -32,4 +32,3 @@ RUN touch /usr/share/hunspell/vshn.aff
 RUN hunspell -v && hunspell -D
 
 ENTRYPOINT ["/usr/bin/hunspell"]
-

@@ -1,6 +1,6 @@
 = Hunspell for VSHN
 
-This project builds a Docker image encapsulating https://hunspell.github.io/[hunspell], to spell check the contents of documents produced at VSHN. The Docker image is available in https://hub.docker.com/r/vshn/hunspell[Docker Hub].
+This project builds a container image encapsulating https://hunspell.github.io/[hunspell], to spell check the contents of documents produced at VSHN.
 
 == Exceptions
 
@@ -18,15 +18,13 @@ The version of `hunspell` provided in this image _only_ contains dictionaries fo
 * German
 * French
 
-NOTE: You can check the list of available dictionaries using the command `docker run --rm --user "$(id -u)" --volume $(pwd):/spell vshn/hunspell:1.7.0 -D`
-
-== Versioning
-
-The Docker images have the same version as the `hunspell` binary contained within.
+NOTE: You can check the list of available dictionaries using the command `podman run --rm --volume $(pwd):/spell ghcr.io/vshn/hunspell:1.7.0.2 -D`
 
 == Usage
 
-For example, after building the https://handbook.vshn.ch[VSHN Handbook] with the `make html` command, you can run the following command to check the spelling of all HTML files:
+For example, after building an Antora website with the `make html` command, you can run the following command to check the spelling of all HTML files:
 
-`docker run --rm --user "$(id -u)" --volume $(pwd):/spell vshn/hunspell:1.7.0 -d en,vshn -l -H _public/\**/\*.html`
-
+[source,bash]
+--
+podman run --rm --volume $(pwd):/spell ghcr.io/vshn/hunspell:1.7.0.2 -d default,vshn -l -H _public/\**/\*.html`
+--
